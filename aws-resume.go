@@ -76,7 +76,7 @@ func NewAwsResumeStack(scope constructs.Construct, id string, props *AwsResumeSt
 	s3deploy.NewBucketDeployment(stack, jsii.String("ResumeContent"), &s3deploy.BucketDeploymentProps{
 		DestinationBucket: resumeBucket,
 		Sources: &[]s3deploy.ISource{
-			s3deploy.Source_Asset(jsii.String("./site-assets"), &s3assets.AssetOptions{}),
+			s3deploy.Source_Asset(jsii.String("./hugo/public"), &s3assets.AssetOptions{}),
 		},
 		Distribution: cloudFrontDistro,
 		DistributionPaths: &[]*string{

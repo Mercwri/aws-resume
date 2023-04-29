@@ -1,0 +1,26 @@
+[
+    {
+        "role":"Senior Site Reliability Engineer",
+        "company":"[rearc.io](https://rearc.io)",
+        "summary":"Mentored Junior SREs at Rearc\n- Taught best practices for building secure deployments\n- Tied lessons into Real World examples from prior engagements and experiences\n\nContracted to Bloomberg LP for a Security Engineering Project (current)\n- Worked with Security Data teams to increase value of data generated from Osquery\n- Used extensive Systems knowledge to build valuable queries for Osquery to generate actionable intelligence\n- Built a framework involving Hybrid Cloud (S3, The Update Framework & Proprietary BLP) technology to deliver updates to Osquery endpoints\n- Engaged with OSS Vendors like Trail of Bits and Fleet to improve products for Bloomberg and the general public’s use",
+        "range":"January 2022 - Present"
+    },
+    {
+        "role":"DevSecOps Engineer",
+        "company":"[Adenza (formerly AxiomSL)](https://adenza.com)",
+        "summary":"Built and Managed an ElasticSearch based SIEM\n- Built on ElasticSearch, Logstash, Filebeat, Winlogbeat, Osquery\n- Tailored and built detection rules to generate actionable intelligence\n- Used SIEM Data to perform Threat Hunting based on emerging CVEs and known vulnerabilities to our Tech Stack\n\nPerformed Offensive Security work to increase security posture\n- Conducted physical Red Team exercises on Adenza offices in NYC\n- Performed Internal Pentests to validate security posture and find vulnerable configurations\n- Ran Tabletop wargames on ransomware and other compromise scenarios\n\nBuilt and Maintained applications to support business processes\n- Rewrote and redeployed a Djanjo-based LDAP password changer application to Docker and Kubernetes\n- Built an app to sync information from HR systems into ActiveDirectory\n- Built an application to advertise a catalog of internal Test and QA systems to Test and QA teams. Application integrated with Zabbix to build a dynamic catalog of systems.\n\nDeployed and Managed Hashicorp Vault\n- Created Vault policies\n- Built and Tested Vault Disaster Recovery plans\n- Built an application that integrated with DesktopCentral to generate and store temporal Windows Admin passwords in environments where LAPs could not be leveraged\n\nDeployed and Managed Kubernetes Clusters\n- Built out on-prem Kubernetes Clusters on Baremetal and VMWare ESXi using packer, terraform, and ansible\n- Created Helm charts for internal Applications\n- Advised and Supported QA and Test teams operations in clusters after hand off\n- Built a Cluster for SRE/Sysadmin Services to “dog food” the use of Kubernetes in the organization.",
+        "range":"August 2018 - December 2021"
+    },
+    {
+        "role":"NOC Analyst",
+        "company":"[Lincoln IT](https://www.lincolnit.com/)",
+        "summary":"Investigated and reviewed events and tickets to ensure compliance\n\n Worked with T3 Engineers and Helpdesk Team Leads to bake compliance into processes",
+        "range":"June 2018 - July 2018"
+    },
+    {
+        "role":"Systems Administrator",
+        "company":"[Einsidler Management](https://www.einsidler.com/)",
+        "summary":"Supported Desktop Hardware and ERP Systems\n\n Wrote Python scripts to automate data ingestion into the ERP",
+        "range":"September 2014 - June 2018"
+    }
+]

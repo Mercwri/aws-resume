@@ -1,0 +1,22 @@
+[
+    {
+        "grouping":"",
+        "skills":[ 
+            "Go", 
+            "Ruby",
+            "Python",
+            "Javascript",
+            "Elasticsearch",
+            "HashiCorp Stack",
+            "Penetration Testing",
+            "Threat Hunting",
+            "Ansible",
+            "Chef",
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "GCP",
+            "Azure"
+        ]
+    }
+]

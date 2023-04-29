@@ -1,0 +1,3 @@
+[submodule "theme/hugo-resume"]
+	path = theme/hugo-resume
+	url = https://github.com/eddiewebb/hugo-resume

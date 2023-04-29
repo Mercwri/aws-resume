@@ -1,0 +1,34 @@
+baseURL = 'https://resume.mikeell.com/'
+languageCode = 'en-us'
+title = 'My Resume'
+PygmentsCodeFences = true
+PygmentsCodeFencesGuessSyntax = true
+PygmentsStyle = "monokai"
+enableGitInfo = false
+
+[params]
+address = "Long Island, NY"
+email = "michaelell87@gmail.com"
+favicon = "favicon.svg"
+firstName = "Michael"
+profileImage = "profile.png"
+lastName = "Ell"
+phone = "1-516-457-1492"
+showEducation = false
+showExperience = true
+showCertifications = false
+showOpenSource = false
+showProjects = false
+showPublications = false
+showQr = false
+showSkills = true
+
+[[params.handles]]
+link = "https://github.com/Mercwri/"
+name = "GitHub"
+
+[outputs]
+home = ["HTML", "JSON"]
+
+[taxonomies]
+tag = "tags"
