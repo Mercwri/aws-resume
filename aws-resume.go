@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	acm "github.com/aws/aws-cdk-go/awscdk/v2/awscertificatemanager"
@@ -37,6 +38,7 @@ func NewAwsResumeStack(scope constructs.Construct, id string, props *AwsResumeSt
 
 	hostedZoneName := props.stackDetails.HostedZoneName
 	subdomain := props.stackDetails.Subdomain
+	var cloudFrontDistro cloudfront.Distribution
 	oai := cloudfront.NewOriginAccessIdentity(stack, jsii.String("OAI"), &cloudfront.OriginAccessIdentityProps{})
 
 	resumeBucket := s3.NewBucket(stack, jsii.String("ResumeBucket"), &s3.BucketProps{
@@ -53,26 +55,36 @@ func NewAwsResumeStack(scope constructs.Construct, id string, props *AwsResumeSt
 		}),
 		ViewerProtocolPolicy: cloudfront.ViewerProtocolPolicy_REDIRECT_TO_HTTPS,
 	}
-	hostedZone := route53.HostedZone_FromLookup(stack, jsii.String("HostedZone"), &route53.HostedZoneProviderProps{
-		DomainName:  jsii.String(hostedZoneName),
-		PrivateZone: jsii.Bool(false),
-	})
-	tlsCert := acm.NewCertificate(stack, jsii.String("ResumeSiteCert"), &acm.CertificateProps{
-		DomainName: jsii.String(fmt.Sprintf("%s.%s", subdomain, hostedZoneName)),
-		Validation: acm.CertificateValidation_FromDns(hostedZone),
-	})
-	cloudFrontDistro := cloudfront.NewDistribution(stack, jsii.String("ResumeDistro"), &cloudfront.DistributionProps{
-		DefaultRootObject: jsii.String("index.html"),
-		DefaultBehavior:   cloudfrontBehavior,
-		Certificate:       tlsCert,
-		DomainNames:       &[]*string{jsii.String(fmt.Sprintf("%s.%s", subdomain, hostedZoneName))},
-	})
+	if strings.TrimSpace(hostedZoneName) != "" {
+		hostedZone := route53.HostedZone_FromLookup(stack, jsii.String("HostedZone"), &route53.HostedZoneProviderProps{
+			DomainName:  jsii.String(hostedZoneName),
+			PrivateZone: jsii.Bool(false),
+		})
+		tlsCert := acm.NewCertificate(stack, jsii.String("ResumeSiteCert"), &acm.CertificateProps{
+			DomainName: jsii.String(fmt.Sprintf("%s.%s", subdomain, hostedZoneName)),
+			Validation: acm.CertificateValidation_FromDns(hostedZone),
+		})
+		cloudFrontDistro = cloudfront.NewDistribution(stack, jsii.String("ResumeDistro"), &cloudfront.DistributionProps{
+			DefaultRootObject: jsii.String("index.html"),
+			DefaultBehavior:   cloudfrontBehavior,
+			Certificate:       tlsCert,
+			DomainNames:       &[]*string{jsii.String(fmt.Sprintf("%s.%s", subdomain, hostedZoneName))},
+		})
 
-	endpoint := route53.NewARecord(stack, jsii.String("DNS"), &route53.ARecordProps{
-		Zone:       hostedZone,
-		RecordName: jsii.String(subdomain),
-		Target:     route53.RecordTarget_FromAlias(route53targets.NewCloudFrontTarget(cloudFrontDistro)),
-	})
+		endpoint := route53.NewARecord(stack, jsii.String("DNS"), &route53.ARecordProps{
+			Zone:       hostedZone,
+			RecordName: jsii.String(subdomain),
+			Target:     route53.RecordTarget_FromAlias(route53targets.NewCloudFrontTarget(cloudFrontDistro)),
+		})
+		awscdk.NewCfnOutput(stack, jsii.String("Route53Endpoint"), &awscdk.CfnOutputProps{
+			Value: endpoint.DomainName(),
+		})
+	} else {
+		cloudFrontDistro = cloudfront.NewDistribution(stack, jsii.String("ResumeDistro"), &cloudfront.DistributionProps{
+			DefaultRootObject: jsii.String("index.html"),
+			DefaultBehavior:   cloudfrontBehavior,
+		})
+	}
 	s3deploy.NewBucketDeployment(stack, jsii.String("ResumeContent"), &s3deploy.BucketDeploymentProps{
 		DestinationBucket: resumeBucket,
 		Sources: &[]s3deploy.ISource{
@@ -83,9 +95,7 @@ func NewAwsResumeStack(scope constructs.Construct, id string, props *AwsResumeSt
 			jsii.String("/*"),
 		},
 	})
-	awscdk.NewCfnOutput(stack, jsii.String("Route53Endpoint"), &awscdk.CfnOutputProps{
-		Value: endpoint.DomainName(),
-	})
+
 	return stack
 }
 
